@@ -30,7 +30,7 @@
                     android:id="@+id/textViewId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black" />
 
@@ -38,7 +38,7 @@
                     android:id="@+id/textViewUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#000000" />
 
@@ -46,16 +46,16 @@
                     android:id="@+id/textViewCorreo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textStyle=""
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textViewContraseña"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textStyle=""
                     android:textColor="@color/black" />
 
             </LinearLayout>
