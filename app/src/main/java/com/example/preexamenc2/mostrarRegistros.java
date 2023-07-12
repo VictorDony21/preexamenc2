@@ -92,15 +92,15 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        List<Alumno> listaFiltrada = db.buscarAlumnos(newText);
-        listaAlumnos.clear();
+        List<Usuario> listaFiltrada = db.buscarUsuarios(newText);
+        listaUsuarios.clear();
 
         // Filtrar por nombre y matrícula
-        for (Alumno alumno : listaFiltrada) {
-            if (alumno.getNombre().toLowerCase().contains(newText.toLowerCase()) ||
-                    alumno.getMatricula().toLowerCase().contains(newText.toLowerCase()) ||
-                    alumno.getCarrera().toLowerCase().contains(newText.toLowerCase()))  {
-                listaAlumnos.add(alumno);
+        for (Usuario usuario : listaFiltrada) {
+            if (usuario.getUsuario().toLowerCase().contains(newText.toLowerCase()) ||
+                    usuario.getCorreo().toLowerCase().contains(newText.toLowerCase()) ||
+                    usuario.getContraseña().toLowerCase().contains(newText.toLowerCase()))  {
+                listaUsuarios.add(usuario);
             }
         }
 
@@ -108,10 +108,10 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
         return true;
     }
 
-    private void mostrarAlumnos() {
-        listaAlumnos.clear();
-        listaAlumnos.addAll(db.obtenerAlumnos());
-        alumnoAdapter.notifyDataSetChanged();
+    private void mostrarUsuarios() {
+        listaUsuarios.clear();
+        listaUsuarios.addAll(db.obtenerUsuarios());
+        usuarioAdapter.notifyDataSetChanged();
     }
 
     public void Salir(View view) {
