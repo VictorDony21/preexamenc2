@@ -25,12 +25,12 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
     private static final int REQUEST_EDIT_USUARIO = 1;
 
     private RecyclerView recyclerViewUsuarios;
-    private RegistroAdapter alumnoAdapter;
-    private List<Registro> listaUsuarios;
+    private usuarioAdapter usuarioAdapter;
+    private List<Usuario> listaUsuarios;
     private SearchView searchView;
 
 
-    public void agregarRegistro(View view) {
+    public void agregarUsuario(View view) {
         Intent intent = new Intent(this, registroActivity.class);
         startActivity(intent);
     }
@@ -44,11 +44,11 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
         recyclerViewUsuarios = findViewById(R.id.recyclerViewAlumnos);
 
         listaUsuarios = new ArrayList<>();
-        alumnoAdapter = new usuarioAdapter(this, listaUsuarios);
-        recyclerViewUsuarios.setAdapter(alumnoAdapter);
+        usuarioAdapter = new usuarioAdapter(this, listaUsuarios);
+        recyclerViewUsuarios.setAdapter(usuarioAdapter);
         recyclerViewUsuarios.setLayoutManager(new LinearLayoutManager(this));
 
-        mostrarAlumnos();
+        mostrarUsuarios();
 
         recyclerViewUsuarios.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, recyclerViewUsuarios,
@@ -95,7 +95,7 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
         List<Usuario> listaFiltrada = db.buscarUsuarios(newText);
         listaUsuarios.clear();
 
-        // Filtrar por nombre y matrícula
+        // Filtrar por usuario y correo
         for (Usuario usuario : listaFiltrada) {
             if (usuario.getUsuario().toLowerCase().contains(newText.toLowerCase()) ||
                     usuario.getCorreo().toLowerCase().contains(newText.toLowerCase()) ||
@@ -104,7 +104,7 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
             }
         }
 
-        alumnoAdapter.notifyDataSetChanged();
+        usuarioAdapter.notifyDataSetChanged();
         return true;
     }
 
@@ -114,19 +114,6 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
         usuarioAdapter.notifyDataSetChanged();
     }
 
-    public void Salir(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmación");
-        builder.setMessage("¿Estás seguro de que deseas salir de la aplicación?");
-        builder.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finishAffinity();
-                System.exit(0); // Cierra la aplicación
-            }
-        }).setNegativeButton("Cancelar", null);
-        builder.show();
-    }
 
     private static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
         private GestureDetectorCompat gestureDetector;

@@ -6,13 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mostrarRegistros">>
 
-    <!-- Contenido principal -->
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/darksouls">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +18,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:background="@color/material_dynamic_secondary50"
-            >
+            tools:ignore="MissingConstraints">
 
             <TextView
                 android:layout_width="200dp"
@@ -38,24 +36,17 @@
             android:id="@+id/recyclerViewAlumnos"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:ignore="MissingConstraints">
 
             <!-- Botón Regresar -->
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnRegresar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/material_dynamic_secondary50"
-                android:onClick="regresar"
-                android:src="@drawable/regresar"
-                app:layout_anchor="@id/recyclerViewAlumnos"
-                app:layout_anchorGravity="bottom|start" />
 
             <LinearLayout
                 android:layout_width="277dp"
@@ -63,11 +54,21 @@
                 android:gravity="center"
                 android:padding="10dp">
 
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/material_dynamic_secondary50"
+                    android:onClick="regresar"
+                    android:text="Regresar"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
 
         </LinearLayout>
-
     </LinearLayout>
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
