@@ -22,49 +22,47 @@ import java.util.List;
 
 public class mostrarRegistros extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private DatabaseManager db;
-    private static final int REQUEST_EDIT_ALUMNO = 1;
+    private static final int REQUEST_EDIT_USUARIO = 1;
 
-    private RecyclerView recyclerViewAlumnos;
+    private RecyclerView recyclerViewUsuarios;
     private RegistroAdapter alumnoAdapter;
-    private List<Registro> listaAlumnos;
+    private List<Registro> listaUsuarios;
     private SearchView searchView;
 
 
-    public void agregarAlumno(View view) {
-        Intent intent = new Intent(this, AgregarAlumnoActivity.class);
+    public void agregarRegistro(View view) {
+        Intent intent = new Intent(this, registroActivity.class);
         startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mostrar_datos);
+        setContentView(R.layout.layout_mostrar_registro);
 
         db = new DatabaseManager(this);
-        recyclerViewAlumnos = findViewById(R.id.recyclerViewAlumnos);
+        recyclerViewUsuarios = findViewById(R.id.recyclerViewAlumnos);
 
-        listaAlumnos = new ArrayList<>();
-        alumnoAdapter = new AlumnoAdapter(this, listaAlumnos);
-        recyclerViewAlumnos.setAdapter(alumnoAdapter);
-        recyclerViewAlumnos.setLayoutManager(new LinearLayoutManager(this));
+        listaUsuarios = new ArrayList<>();
+        alumnoAdapter = new usuarioAdapter(this, listaUsuarios);
+        recyclerViewUsuarios.setAdapter(alumnoAdapter);
+        recyclerViewUsuarios.setLayoutManager(new LinearLayoutManager(this));
 
         mostrarAlumnos();
 
-        recyclerViewAlumnos.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recyclerViewAlumnos,
+        recyclerViewUsuarios.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recyclerViewUsuarios,
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Alumno selectedAlumno = listaAlumnos.get(position);
+                                Usuario selectedUsuario = listaUsuarios.get(position);
 
-                                // Abre la ventana de edición del alumno y pasa los datos del alumno seleccionado
-                                Intent intent = new Intent(MostrarDatosActivity.this, AgregarAlumnoActivity.class);
-                                intent.putExtra("ALUMNO_ID", selectedAlumno.getId());
-                                intent.putExtra("ALUMNO_CARRERA", selectedAlumno.getCarrera());
-                                intent.putExtra("ALUMNO_NOMBRE", selectedAlumno.getNombre());
-                                intent.putExtra("ALUMNO_MATRICULA", selectedAlumno.getMatricula());
-                                intent.putExtra("ALUMNO_FOTO", selectedAlumno.getFoto());
-                                startActivityForResult(intent, REQUEST_EDIT_ALUMNO);
+                                Intent intent = new Intent(mostrarRegistros.this, registroActivity.class);
+                                intent.putExtra("ALUMNO_ID", selectedUsuario.getId());
+                                intent.putExtra("ALUMNO_USUARIO", selectedUsuario.getUsuario());
+                                intent.putExtra("ALUMNO_CORREO", selectedUsuario.getCorreo());
+                                intent.putExtra("ALUMNO_CONTRASEÑA", selectedUsuario.getContraseña());
+                                startActivityForResult(intent, REQUEST_EDIT_USUARIO);
                             }
 
                             @Override
