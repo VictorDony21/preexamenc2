@@ -2,6 +2,7 @@ package com.example.preexamenc2;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -11,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SearchView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -159,10 +161,17 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
         }
     }
     public void regresar(View view) {
-        // Intent intent = new Intent(this, MainActivity.class);
-        Intent intent = new Intent(this, MainActivity.class);
-
-        startActivity(intent);
-        finish();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmación");
+        builder.setMessage("¿Estás seguro de que deseas regresar al menú principal?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Regresar a la ventana anterior
+                onBackPressed();
+            }
+        });
+        builder.setNegativeButton("No", null);
+        builder.show();
     }
 }
