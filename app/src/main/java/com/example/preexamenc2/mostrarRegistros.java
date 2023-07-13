@@ -1,7 +1,7 @@
 package com.example.preexamenc2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SearchView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,19 +28,14 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
     private List<Usuario> listaUsuarios;
     private SearchView searchView;
 
-
-    public void agregarUsuario(View view) {
-        Intent intent = new Intent(this, registroActivity.class);
-        startActivity(intent);
-    }
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_mostrar_registro);
 
         db = new DatabaseManager(this);
-        recyclerViewUsuarios = findViewById(R.id.recyclerViewAlumnos);
+        recyclerViewUsuarios = findViewById(R.id.recyclerViewUsuarios);
 
         listaUsuarios = new ArrayList<>();
         usuarioAdapter = new usuarioAdapter(this, listaUsuarios);
@@ -163,5 +157,12 @@ public class mostrarRegistros extends AppCompatActivity implements SearchView.On
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
+    }
+    public void regresar(View view) {
+        // Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
+        finish();
     }
 }

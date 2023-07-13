@@ -12,11 +12,38 @@ import java.util.regex.Pattern;
 
 public class registroActivity extends AppCompatActivity {
 
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_GALLERY = 2;
+
+    private DatabaseManager db;
+    private int alumnoId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_registro);
 
+        db = new DatabaseManager(this);
+
+        // Verifica si se enviaron datos extras
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            alumnoId = extras.getInt("ALUMNO_ID");
+
+            String usuarioUsuario = extras.getString("USUARIO_USUARIO");
+            String usuarioCorreo = extras.getString("USUARIO_CORREO");
+            String usuarioContraseña = extras.getString("USUARIO_CONTRASEÑA");
+
+
+            EditText etUsuario = findViewById(R.id.etUsuario);
+            EditText etCorreo = findViewById(R.id.etCorreo);
+            EditText etContraseña = findViewById(R.id.etContraseña);
+
+            etUsuario.setText(usuarioUsuario);
+            etCorreo.setText(usuarioCorreo);
+            etContraseña.setText(usuarioContraseña);
+
+        }
 
     }
 
@@ -32,27 +59,31 @@ public class registroActivity extends AppCompatActivity {
         String contraseña = etContraseña.getText().toString();
         String confirmContraseña = etConfirmarContra.getText().toString();
 
+        String correoMin = correo.toLowerCase();
+
 
         // Verifica que todos los campos estén completos
-        if (usuario.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmContraseña.isEmpty() ) {
+        if (usuario.isEmpty() || correoMin.isEmpty() || contraseña.isEmpty() || confirmContraseña.isEmpty() ) {
             Toast.makeText(this, "Por favor, ingresa todos los datos requeridos", Toast.LENGTH_SHORT).show();
-        } else if (validarEmail(correo)) {
+            return;
+        } else if (validarEmail(correoMin)) {
             // El email tiene el formato correcto, puedes proceder con el envío
             if (contraseña.equals(confirmContraseña)) {
+
+                db.agregarUsuario(usuario, correoMin, contraseña);
                 Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                 // Regresar
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }else {
                 Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                return;
             }
         }else {
             // El email no tiene el formato correcto, muestra un mensaje de error
             Toast.makeText(getApplicationContext(), "Email inválido", Toast.LENGTH_SHORT).show();
+            return;
         }
-
-
-
     }
 
     public boolean validarEmail(String email) {
@@ -65,10 +96,6 @@ public class registroActivity extends AppCompatActivity {
         // Verificar si el email coincide con el patrón
         return pattern.matcher(email).matches();
     }
-
-
-
-
 
     public void regresar(View view) {
         // Intent intent = new Intent(this, MainActivity.class);

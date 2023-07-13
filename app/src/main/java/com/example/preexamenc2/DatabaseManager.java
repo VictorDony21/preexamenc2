@@ -68,6 +68,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 null
         );
 
+
         Usuario usuario = null;
         if (cursor != null && cursor.moveToFirst()) {
             int columnIndexId = cursor.getColumnIndex(COLUMN_ID);
@@ -92,7 +93,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 
     public List<Usuario> buscarUsuarios(String query) {
-        List<Usuario> listaUsuario = new ArrayList<>();
+        List<Usuario> listaUsuarios = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USUARIOS +
@@ -120,7 +121,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                     usuario.setContraseña(cursor.getString(columnIndexContraseña));
                 }
 
-                listaUsuario.add(usuario);
+                listaUsuarios.add(usuario);
             } while (cursor.moveToNext());
         }
 
@@ -128,11 +129,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
             cursor.close();
         }
 
-        return listaUsuario;
+        return listaUsuarios;
     }
 
     public List<Usuario> obtenerUsuarios() {
-        List<Usuario> listaUsuario = new ArrayList<>();
+        List<Usuario> listaUsuarios = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USUARIOS, null);
@@ -158,7 +159,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                     usuario.setContraseña(cursor.getString(columnIndexContraseña));
                 }
 
-                listaUsuario.add(usuario);
+                listaUsuarios.add(usuario);
             } while (cursor.moveToNext());
         }
 
@@ -166,6 +167,22 @@ public class DatabaseManager extends SQLiteOpenHelper {
             cursor.close();
         }
 
-        return listaUsuario;
+        return listaUsuarios;
+    }
+
+    public boolean verificarUsuario(String correo, String contraseña) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_USUARIOS + " WHERE " +
+                COLUMN_CORREO + " = ? AND " + COLUMN_CONTRASEÑA + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{correo, contraseña});
+
+        boolean usuarioExiste = cursor.getCount() > 0;
+
+        cursor.close();
+        db.close();
+
+        return usuarioExiste;
     }
 }

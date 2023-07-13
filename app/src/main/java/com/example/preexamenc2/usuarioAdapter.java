@@ -1,12 +1,9 @@
 package com.example.preexamenc2;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class usuarioAdapter extends RecyclerView.Adapter<usuarioAdapter.UsuarioViewHolder> {
-    private List<Usuario> listaUsuario;
+    private List<Usuario> listaUsuarios;
     private Context context;
 
-    public usuarioAdapter(Context context, List<Usuario> listaUsuario) {
+    public usuarioAdapter(Context context, List<Usuario> listaUsuarios) {
         this.context = context;
-        this.listaUsuario = listaUsuario;
+        this.listaUsuarios = listaUsuarios;
     }
 
     @NonNull
@@ -32,13 +29,13 @@ public class usuarioAdapter extends RecyclerView.Adapter<usuarioAdapter.UsuarioV
 
     @Override
     public void onBindViewHolder(@NonNull UsuarioViewHolder holder, int position) {
-        Usuario usuario = listaUsuario.get(position);
+        Usuario usuario = listaUsuarios.get(position);
         holder.bind(usuario);
     }
 
     @Override
     public int getItemCount() {
-        return listaUsuario.size();
+        return listaUsuarios.size();
     }
 
     public class UsuarioViewHolder extends RecyclerView.ViewHolder {
